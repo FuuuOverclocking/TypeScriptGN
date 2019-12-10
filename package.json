@@ -1,0 +1,15 @@
+{
+    "name": "typescriptgn",
+    "version": "0.0.1",
+    "description": "TypeScriptGN language compiler",
+    "main": "./built/typescriptgn.js",
+    "author": "X.Y.Z.",
+    "license": "MIT",
+    "scripts": {
+        "build": "tsc -p './tsconfig.json'"
+    },
+    "dependencies": {
+        "tslib": "^1.10.0",
+        "typescript": "^3.7.3"
+    }
+}
