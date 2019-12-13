@@ -1,5 +1,5 @@
-import { assert, isDigit, isLineBreak, isOctalDigit, isBinaryDigit, isHexDigit, isIdentifierStart, isIdentifierPart, checkReservedWord } from './util';
-import { CharacterCodes, SyntaxKind, TokenFlags, SyntaxKindMarker } from './lang-types';
+import { CharacterCodes, SyntaxKind, SyntaxKindMarker, TokenFlags } from './lang-types';
+import { assert, checkReservedWord, isBinaryDigit, isDigit, isHexDigit, isIdentifierPart, isIdentifierStart, isLineBreak, isOctalDigit } from './util';
 
 interface ScannerLike {
     /************ states ************/
@@ -66,7 +66,7 @@ let tokenPos = 0;
 let pos = 0;
 let end = 0; // end position of text
 let token: SyntaxKind = SyntaxKind.Unknown;
-let tokenValue: string | undefined = undefined;
+let tokenValue: string | undefined;
 let tokenFlags: TokenFlags = TokenFlags.None;
 
 /**
@@ -289,7 +289,8 @@ export class Scanner implements ScannerLike {
                         tokenValue = this.scanNumber();
                         return token = SyntaxKind.NumericLiteral;
                     }
-                    if (text.charCodeAt(pos + 1) === CharacterCodes.dot && text.charCodeAt(pos + 2) === CharacterCodes.dot) {
+                    if (text.charCodeAt(pos + 1) === CharacterCodes.dot
+                        && text.charCodeAt(pos + 2) === CharacterCodes.dot) {
                         return pos += 3, token = SyntaxKind.DotDotDotToken;
                     }
                     pos++;
@@ -312,13 +313,14 @@ export class Scanner implements ScannerLike {
                         pos += 2;
                         let commentClosed = false;
                         while (pos < end) {
-                            const ch = text.charCodeAt(pos);
-                            if (ch === CharacterCodes.asterisk && text.charCodeAt(pos + 1) === CharacterCodes.slash) {
+                            const _ch = text.charCodeAt(pos);
+                            if (_ch === CharacterCodes.asterisk
+                                && text.charCodeAt(pos + 1) === CharacterCodes.slash) {
                                 pos += 2;
                                 commentClosed = true;
                                 break;
                             }
-                            if (isLineBreak(ch)) {
+                            if (isLineBreak(_ch)) {
                                 tokenFlags |= TokenFlags.PrecedingLineBreak;
                             }
                             pos++;
@@ -359,9 +361,11 @@ export class Scanner implements ScannerLike {
                     if (text.charCodeAt(pos + 1) === CharacterCodes.greaterThan) {
                         if (text.charCodeAt(pos + 2) === CharacterCodes.greaterThan) {
                             if (text.charCodeAt(pos + 3) === CharacterCodes.equals) {
-                                return pos += 4, token = SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken;
+                                return pos += 4,
+                                    token = SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken;
                             }
-                            return pos += 3, token = SyntaxKind.GreaterThanGreaterThanGreaterThanToken;
+                            return pos += 3,
+                                token = SyntaxKind.GreaterThanGreaterThanGreaterThanToken;
                         }
                         if (text.charCodeAt(pos + 2) === CharacterCodes.equals) {
                             return pos += 3, token = SyntaxKind.GreaterThanGreaterThanEqualsToken;
@@ -387,7 +391,8 @@ export class Scanner implements ScannerLike {
                     return token = SyntaxKind.EqualsToken;
                 case CharacterCodes.question:
                     pos++;
-                    if (text.charCodeAt(pos) === CharacterCodes.dot && !isDigit(text.charCodeAt(pos + 1))) {
+                    if (text.charCodeAt(pos) === CharacterCodes.dot
+                        && !isDigit(text.charCodeAt(pos + 1))) {
                         pos++;
                         return token = SyntaxKind.QuestionDotToken;
                     }
@@ -441,7 +446,8 @@ export class Scanner implements ScannerLike {
                     return token = SyntaxKind.StringLiteral;
 
                 case CharacterCodes._0:
-                    if (pos + 2 < end && (text.charCodeAt(pos + 1) === CharacterCodes.X || text.charCodeAt(pos + 1) === CharacterCodes.x)) {
+                    if (pos + 2 < end && (text.charCodeAt(pos + 1) === CharacterCodes.X
+                        || text.charCodeAt(pos + 1) === CharacterCodes.x)) {
                         pos += 2;
                         tokenValue = this.scanHexDigits();
                         if (!tokenValue) {
@@ -451,8 +457,8 @@ export class Scanner implements ScannerLike {
                         tokenValue = '' + parseInt(tokenValue, 16);
                         tokenFlags |= TokenFlags.HexSpecifier;
                         return token = SyntaxKind.NumericLiteral;
-                    }
-                    else if (pos + 2 < end && (text.charCodeAt(pos + 1) === CharacterCodes.B || text.charCodeAt(pos + 1) === CharacterCodes.b)) {
+                    } else if (pos + 2 < end && (text.charCodeAt(pos + 1) === CharacterCodes.B
+                        || text.charCodeAt(pos + 1) === CharacterCodes.b)) {
                         pos += 2;
                         tokenValue = this.scanBinaryDigits();
                         if (!tokenValue) {
@@ -462,8 +468,8 @@ export class Scanner implements ScannerLike {
                         tokenValue = '' + parseInt(tokenValue, 2);
                         tokenFlags |= TokenFlags.BinarySpecifier;
                         return token = SyntaxKind.NumericLiteral;
-                    }
-                    else if (pos + 2 < end && (text.charCodeAt(pos + 1) === CharacterCodes.O || text.charCodeAt(pos + 1) === CharacterCodes.o)) {
+                    } else if (pos + 2 < end && (text.charCodeAt(pos + 1) === CharacterCodes.O
+                        || text.charCodeAt(pos + 1) === CharacterCodes.o)) {
                         pos += 2;
                         tokenValue = this.scanOctalDigits();
                         if (!tokenValue) {
@@ -558,23 +564,23 @@ export class Scanner implements ScannerLike {
         pos++;
         switch (ch) {
             case CharacterCodes._0:
-                return "\0";
+                return '\0';
             case CharacterCodes.b:
-                return "\b";
+                return '\b';
             case CharacterCodes.t:
-                return "\t";
+                return '\t';
             case CharacterCodes.n:
-                return "\n";
+                return '\n';
             case CharacterCodes.v:
-                return "\v";
+                return '\v';
             case CharacterCodes.f:
-                return "\f";
+                return '\f';
             case CharacterCodes.r:
-                return "\r";
+                return '\r';
             case CharacterCodes.singleQuote:
-                return "\'";
+                return '\'';
             case CharacterCodes.doubleQuote:
-                return "\"";
+                return '\"';
             default:
                 this.error('Expected escape char');
                 return '';
@@ -593,8 +599,9 @@ export class Scanner implements ScannerLike {
             pos++;
             decimalFragment = this.scanNumberFragment();
         }
-        let end = pos;
-        if (text.charCodeAt(pos) === CharacterCodes.E || text.charCodeAt(pos) === CharacterCodes.e) {
+        let _end = pos;
+        if (text.charCodeAt(pos) === CharacterCodes.E
+            || text.charCodeAt(pos) === CharacterCodes.e) {
             pos++;
             tokenFlags |= TokenFlags.Scientific;
             if (text.charCodeAt(pos) === CharacterCodes.plus
@@ -607,11 +614,11 @@ export class Scanner implements ScannerLike {
             if (!finalFragment) {
                 this.error('Digit expected');
             } else {
-                scientificFragment = text.substring(end, preNumericPart) + finalFragment;
-                end = pos;
+                scientificFragment = text.substring(_end, preNumericPart) + finalFragment;
+                _end = pos;
             }
         }
-        const result = text.substring(start, end);
+        const result = text.substring(start, _end);
 
         if (decimalFragment !== undefined || tokenFlags & TokenFlags.Scientific) {
             return '' + +result;
@@ -622,7 +629,7 @@ export class Scanner implements ScannerLike {
 
     // Several short function, runtime will inline them
     private scanNumberFragment(): string {
-        let start = pos;
+        const start = pos;
         while (isDigit(text.charCodeAt(pos))) {
             pos++;
         }
