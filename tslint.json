@@ -28,6 +28,7 @@
                 "ignore-pattern": "^import |^export {(.*?)}"
             }
         ],
+        "member-access": false,
         "member-ordering": false,
         "no-angle-bracket-type-assertion": false,
         "no-bitwise": false,
