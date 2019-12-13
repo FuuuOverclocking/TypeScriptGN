@@ -6,10 +6,15 @@
     "author": "X.Y.Z.",
     "license": "MIT",
     "scripts": {
-        "build": "tsc -p './tsconfig.json'"
+        "build": "tsc -p ./tsconfig.json",
+        "build:watch": "tsc -p ./tsconfig.json --watch"
     },
     "dependencies": {
+        "@types/fs-extra": "^8.0.1",
+        "fs-extra": "^8.1.0",
+        "ts-node": "^8.5.4",
         "tslib": "^1.10.0",
-        "typescript": "^3.7.3"
+        "typescript": "^3.7.3",
+        "tsconfig-paths": "^3.9.0"
     }
 }
