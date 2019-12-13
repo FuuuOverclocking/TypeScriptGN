@@ -6,15 +6,27 @@
     "author": "X.Y.Z.",
     "license": "MIT",
     "scripts": {
+        "cz": "git-cz",
         "build": "tsc -p ./tsconfig.json",
-        "build:watch": "tsc -p ./tsconfig.json --watch"
+        "build:watch": "tsc -p ./tsconfig.json --watch",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+        "lint": "tslint --fix -c tslint.json 'src/**/*.ts'"
     },
-    "dependencies": {
+    "devDependencies": {
         "@types/fs-extra": "^8.0.1",
+        "commitizen": "^4.0.3",
+        "conventional-changelog-cli": "^2.0.28",
+        "cz-conventional-changelog": "^3.0.2",
         "fs-extra": "^8.1.0",
         "ts-node": "^8.5.4",
+        "tsconfig-paths": "^3.9.0",
         "tslib": "^1.10.0",
-        "typescript": "^3.7.3",
-        "tsconfig-paths": "^3.9.0"
+        "tslint": "^5.20.1",
+        "typescript": "^3.7.3"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
