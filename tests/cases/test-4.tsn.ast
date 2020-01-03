@@ -1,0 +1,586 @@
+{
+   "kind": "SourceFile",
+   "text": "// Test all other expression\n\na ??\n    b && c ||\n    1 | 2 & 4 ^ 5 ||\n    a == b && a != b ||\n    a === b && a !== b;\n\na < b > c;\n\nkey in obj;             // 对象是否含有键\nobj instanceof ClassA;  // 对象是否是类的实例\n\n1 << 2 >>> 3;\n\n1 + 2 * 3 - 4 % 5;\n\n2 ** 3 ** 4;            // 幂，唯一右结合算符\n\ntrue ? 1 : 2;\n\nnodeA -> nodeB -> nodeC; // EventNet 连接符\n\n1, 2;                   // 逗号表达式，求值结果是逗号右边的表达式\n\n// 复合赋值\na += 1;\na *= 1;\na -= 1;\na /= 1;\na <<= 1;\na >>= 1;\na >>>= 1;\na &= 1;\na ^= 1;\na |= 1;\na **= 1;",
+   "fileName": ".\\tests\\cases\\test-4.tsn",
+   "statements": [
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "QuestionQuestionToken"
+            },
+            "right": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "BinaryExpression",
+                  "left": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "BinaryExpression",
+                        "left": {
+                           "kind": "Identifier",
+                           "text": "b"
+                        },
+                        "operatorToken": {
+                           "kind": "AmpersandAmpersandToken"
+                        },
+                        "right": {
+                           "kind": "Identifier",
+                           "text": "c"
+                        }
+                     },
+                     "operatorToken": {
+                        "kind": "BarBarToken"
+                     },
+                     "right": {
+                        "kind": "BinaryExpression",
+                        "left": {
+                           "kind": "NumericLiteral",
+                           "text": "1",
+                           "numericLiteralFlags": 1
+                        },
+                        "operatorToken": {
+                           "kind": "BarToken"
+                        },
+                        "right": {
+                           "kind": "BinaryExpression",
+                           "left": {
+                              "kind": "BinaryExpression",
+                              "left": {
+                                 "kind": "NumericLiteral",
+                                 "text": "2",
+                                 "numericLiteralFlags": 0
+                              },
+                              "operatorToken": {
+                                 "kind": "AmpersandToken"
+                              },
+                              "right": {
+                                 "kind": "NumericLiteral",
+                                 "text": "4",
+                                 "numericLiteralFlags": 0
+                              }
+                           },
+                           "operatorToken": {
+                              "kind": "CaretToken"
+                           },
+                           "right": {
+                              "kind": "NumericLiteral",
+                              "text": "5",
+                              "numericLiteralFlags": 0
+                           }
+                        }
+                     }
+                  },
+                  "operatorToken": {
+                     "kind": "BarBarToken"
+                  },
+                  "right": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "BinaryExpression",
+                        "left": {
+                           "kind": "Identifier",
+                           "text": "a"
+                        },
+                        "operatorToken": {
+                           "kind": "EqualsEqualsToken"
+                        },
+                        "right": {
+                           "kind": "Identifier",
+                           "text": "b"
+                        }
+                     },
+                     "operatorToken": {
+                        "kind": "AmpersandAmpersandToken"
+                     },
+                     "right": {
+                        "kind": "BinaryExpression",
+                        "left": {
+                           "kind": "Identifier",
+                           "text": "a"
+                        },
+                        "operatorToken": {
+                           "kind": "ExclamationEqualsToken"
+                        },
+                        "right": {
+                           "kind": "Identifier",
+                           "text": "b"
+                        }
+                     }
+                  }
+               },
+               "operatorToken": {
+                  "kind": "BarBarToken"
+               },
+               "right": {
+                  "kind": "BinaryExpression",
+                  "left": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "Identifier",
+                        "text": "a"
+                     },
+                     "operatorToken": {
+                        "kind": "EqualsEqualsEqualsToken"
+                     },
+                     "right": {
+                        "kind": "Identifier",
+                        "text": "b"
+                     }
+                  },
+                  "operatorToken": {
+                     "kind": "AmpersandAmpersandToken"
+                  },
+                  "right": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "Identifier",
+                        "text": "a"
+                     },
+                     "operatorToken": {
+                        "kind": "ExclamationEqualsEqualsToken"
+                     },
+                     "right": {
+                        "kind": "Identifier",
+                        "text": "b"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "Identifier",
+                  "text": "a"
+               },
+               "operatorToken": {
+                  "kind": "LessThanToken"
+               },
+               "right": {
+                  "kind": "Identifier",
+                  "text": "b"
+               }
+            },
+            "operatorToken": {
+               "kind": "GreaterThanToken"
+            },
+            "right": {
+               "kind": "Identifier",
+               "text": "c"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "key"
+            },
+            "operatorToken": {
+               "kind": "InKeyword"
+            },
+            "right": {
+               "kind": "Identifier",
+               "text": "obj"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "obj"
+            },
+            "operatorToken": {
+               "kind": "InstanceOfKeyword"
+            },
+            "right": {
+               "kind": "Identifier",
+               "text": "ClassA"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 1
+               },
+               "operatorToken": {
+                  "kind": "LessThanLessThanToken"
+               },
+               "right": {
+                  "kind": "NumericLiteral",
+                  "text": "2",
+                  "numericLiteralFlags": 0
+               }
+            },
+            "operatorToken": {
+               "kind": "GreaterThanGreaterThanGreaterThanToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "3",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 1
+               },
+               "operatorToken": {
+                  "kind": "PlusToken"
+               },
+               "right": {
+                  "kind": "BinaryExpression",
+                  "left": {
+                     "kind": "NumericLiteral",
+                     "text": "2",
+                     "numericLiteralFlags": 0
+                  },
+                  "operatorToken": {
+                     "kind": "AsteriskToken"
+                  },
+                  "right": {
+                     "kind": "NumericLiteral",
+                     "text": "3",
+                     "numericLiteralFlags": 0
+                  }
+               }
+            },
+            "operatorToken": {
+               "kind": "MinusToken"
+            },
+            "right": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "NumericLiteral",
+                  "text": "4",
+                  "numericLiteralFlags": 0
+               },
+               "operatorToken": {
+                  "kind": "PercentToken"
+               },
+               "right": {
+                  "kind": "NumericLiteral",
+                  "text": "5",
+                  "numericLiteralFlags": 0
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "NumericLiteral",
+               "text": "2",
+               "numericLiteralFlags": 1
+            },
+            "operatorToken": {
+               "kind": "AsteriskAsteriskToken"
+            },
+            "right": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "NumericLiteral",
+                  "text": "3",
+                  "numericLiteralFlags": 0
+               },
+               "operatorToken": {
+                  "kind": "AsteriskAsteriskToken"
+               },
+               "right": {
+                  "kind": "NumericLiteral",
+                  "text": "4",
+                  "numericLiteralFlags": 0
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ConditionalExpression",
+            "condition": {
+               "kind": "TrueKeyword"
+            },
+            "whenTrue": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            },
+            "whenFalse": {
+               "kind": "NumericLiteral",
+               "text": "2",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ConnectionExpression",
+            "left": {
+               "kind": "ConnectionExpression",
+               "left": {
+                  "kind": "Identifier",
+                  "text": "nodeA"
+               },
+               "right": {
+                  "kind": "Identifier",
+                  "text": "nodeB"
+               }
+            },
+            "right": {
+               "kind": "Identifier",
+               "text": "nodeC"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "CommaExpression",
+            "left": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 1
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "2",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "PlusEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "AsteriskEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "MinusEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "SlashEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "LessThanLessThanEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "GreaterThanGreaterThanEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "GreaterThanGreaterThanGreaterThanEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "AmpersandEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "CaretEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "BarEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "a"
+            },
+            "operatorToken": {
+               "kind": "AsteriskAsteriskEqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      }
+   ],
+   "nodeCount": 166
+}

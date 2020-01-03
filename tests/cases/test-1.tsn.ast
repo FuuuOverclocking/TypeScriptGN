@@ -1,0 +1,461 @@
+{
+   "kind": "SourceFile",
+   "text": "// Test all Primary Expression\n999;\n0123457123;         // 八进制\n0b10111;            // 二进制\n0o1234567123;       // 八进制\n0xABCabc;           // 十六进制\n.123;               // 小数\n1.234e-2;           // 科学\n\n'Hello World~';\n\"World Hello~\";\n\nabc;                // 标识符\n\ntrue;\nfalse;\nnull;\n[1,2,3];            // 数组字面量\n({\n    a: 1,\n    b: \"hello\",\n    c,\n    ...{\n        d: true,\n        e: null,\n    }\n});                 // 对象字面量\n\n(function () { });                          // 函数表达式\n(async function fn<T>(): string { });       // 异步泛型函数表达式，含签名\n\n// lambda 实际上是更低级的 Assignment Expression\n(() => {});                                 // lambda 箭头函数\n(async <T>() => {});                        // 异步 lambda 箭头函数\n\n(node {});                                  // 匿名 EventNet Node Expression\n(node NodeA {});                            // 非匿名 Node\n(node NodeA(a,b,c) {});                     // 非匿名含参数 Node\n(node (a,b,c) {});                          // 仅含参数匿名 Node\n(subnet {});                                // 匿名 EventNet Subnet Expression\n\nnode();           // node 和 subnet 是上下文关键字，在这里作为合法标识符\nsubnet + 1;\n\nnew Animal();       // 构造对象",
+   "fileName": ".\\tests\\cases\\test-1.tsn",
+   "statements": [
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": "999",
+            "numericLiteralFlags": 1
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": "0123457123",
+            "numericLiteralFlags": 5
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": "0b10111",
+            "numericLiteralFlags": 17
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": "0o1234567123",
+            "numericLiteralFlags": 33
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": "0xABCabc",
+            "numericLiteralFlags": 9
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": ".123",
+            "numericLiteralFlags": 1
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NumericLiteral",
+            "text": "1.234e-2",
+            "numericLiteralFlags": 3
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "StringLiteral",
+            "text": "'Hello World~'"
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "StringLiteral",
+            "text": "\"World Hello~\""
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "Identifier",
+            "text": "abc"
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "TrueKeyword"
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "FalseKeyword"
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NullKeyword"
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ArrayLiteralExpression",
+            "elements": [
+               {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 0
+               },
+               {
+                  "kind": "NumericLiteral",
+                  "text": "2",
+                  "numericLiteralFlags": 0
+               },
+               {
+                  "kind": "NumericLiteral",
+                  "text": "3",
+                  "numericLiteralFlags": 0
+               }
+            ]
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "ObjectLiteralExpression",
+               "properties": [
+                  {
+                     "kind": "PropertyAssignment",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "a"
+                     },
+                     "initializer": {
+                        "kind": "NumericLiteral",
+                        "text": "1",
+                        "numericLiteralFlags": 0
+                     }
+                  },
+                  {
+                     "kind": "PropertyAssignment",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "b"
+                     },
+                     "initializer": {
+                        "kind": "StringLiteral",
+                        "text": "\"hello\""
+                     }
+                  },
+                  {
+                     "kind": "ShorthandPropertyAssignment",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "c"
+                     }
+                  },
+                  {
+                     "kind": "SpreadExpression",
+                     "expression": {
+                        "kind": "ObjectLiteralExpression",
+                        "properties": [
+                           {
+                              "kind": "PropertyAssignment",
+                              "name": {
+                                 "kind": "Identifier",
+                                 "text": "d"
+                              },
+                              "initializer": {
+                                 "kind": "TrueKeyword"
+                              }
+                           },
+                           {
+                              "kind": "PropertyAssignment",
+                              "name": {
+                                 "kind": "Identifier",
+                                 "text": "e"
+                              },
+                              "initializer": {
+                                 "kind": "NullKeyword"
+                              }
+                           }
+                        ]
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "FunctionExpression",
+               "parameters": [],
+               "body": {
+                  "kind": "Block",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "FunctionExpression",
+               "modifiers": [
+                  {
+                     "kind": "AsyncKeyword"
+                  }
+               ],
+               "name": {
+                  "kind": "Identifier",
+                  "text": "fn"
+               },
+               "typeParameters": [
+                  {
+                     "kind": "TypeParameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "T"
+                     }
+                  }
+               ],
+               "parameters": [],
+               "type": {
+                  "kind": "StringKeyword"
+               },
+               "body": {
+                  "kind": "Block",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "ArrowFunction",
+               "isAsync": false,
+               "parameters": [],
+               "equalsGreaterThanToken": {
+                  "kind": "EqualsGreaterThanToken"
+               },
+               "body": {
+                  "kind": "Block",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "ArrowFunction",
+               "isAsync": true,
+               "typeParameters": [
+                  {
+                     "kind": "TypeParameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "T"
+                     }
+                  }
+               ],
+               "parameters": [],
+               "equalsGreaterThanToken": {
+                  "kind": "EqualsGreaterThanToken"
+               },
+               "body": {
+                  "kind": "Block",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "NodeExpression",
+               "isSubnet": false,
+               "nodeBlock": {
+                  "kind": "NodeBlock",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "NodeExpression",
+               "isSubnet": false,
+               "name": {
+                  "kind": "Identifier",
+                  "text": "NodeA"
+               },
+               "nodeBlock": {
+                  "kind": "NodeBlock",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "NodeExpression",
+               "isSubnet": false,
+               "name": {
+                  "kind": "Identifier",
+                  "text": "NodeA"
+               },
+               "parameters": [
+                  {
+                     "kind": "Parameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "a"
+                     }
+                  },
+                  {
+                     "kind": "Parameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "b"
+                     }
+                  },
+                  {
+                     "kind": "Parameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "c"
+                     }
+                  }
+               ],
+               "nodeBlock": {
+                  "kind": "NodeBlock",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "NodeExpression",
+               "isSubnet": false,
+               "parameters": [
+                  {
+                     "kind": "Parameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "a"
+                     }
+                  },
+                  {
+                     "kind": "Parameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "b"
+                     }
+                  },
+                  {
+                     "kind": "Parameter",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "c"
+                     }
+                  }
+               ],
+               "nodeBlock": {
+                  "kind": "NodeBlock",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ParenthesizedExpression",
+            "expression": {
+               "kind": "NodeExpression",
+               "isSubnet": true,
+               "nodeBlock": {
+                  "kind": "NodeBlock",
+                  "statements": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "CallExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "node",
+               "originalKeywordKind": 141
+            },
+            "arguments": {
+               "kind": "Arguments",
+               "list": []
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "subnet",
+               "originalKeywordKind": 142
+            },
+            "operatorToken": {
+               "kind": "PlusToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NewExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "Animal"
+            },
+            "arguments": {
+               "kind": "Arguments",
+               "list": []
+            }
+         }
+      }
+   ],
+   "nodeCount": 123
+}

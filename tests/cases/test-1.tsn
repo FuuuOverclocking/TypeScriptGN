@@ -1,0 +1,45 @@
+// Test all Primary Expression
+999;
+0123457123;         // 八进制
+0b10111;            // 二进制
+0o1234567123;       // 八进制
+0xABCabc;           // 十六进制
+.123;               // 小数
+1.234e-2;           // 科学
+
+'Hello World~';
+"World Hello~";
+
+abc;                // 标识符
+
+true;
+false;
+null;
+[1,2,3];            // 数组字面量
+({
+    a: 1,
+    b: "hello",
+    c,
+    ...{
+        d: true,
+        e: null,
+    }
+});                 // 对象字面量
+
+(function () { });                          // 函数表达式
+(async function fn<T>(): string { });       // 异步泛型函数表达式，含签名
+
+// lambda 实际上是更低级的 Assignment Expression
+(() => {});                                 // lambda 箭头函数
+(async <T>() => {});                        // 异步 lambda 箭头函数
+
+(node {});                                  // 匿名 EventNet Node Expression
+(node NodeA {});                            // 非匿名 Node
+(node NodeA(a,b,c) {});                     // 非匿名含参数 Node
+(node (a,b,c) {});                          // 仅含参数匿名 Node
+(subnet {});                                // 匿名 EventNet Subnet Expression
+
+node();           // node 和 subnet 是上下文关键字，在这里作为合法标识符
+subnet + 1;
+
+new Animal();       // 构造对象

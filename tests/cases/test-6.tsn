@@ -1,0 +1,39 @@
+// Test all declaration
+
+var i;
+var j = 1;
+var k, l = 2, m = 3;
+
+let a = 1;
+const b = true;
+
+function func_1() {
+    return;
+    return 1;
+}
+
+// 泛型函数
+function func_2<T extends object, U, V>() {}
+
+// 泛型函数，可选参数，默认参数，参数类型
+function func_3<T, U>(arg_1?: string, arg_2?: number = 0) {}
+
+// 重载
+function func_4(): void;
+function func_4(a: string): number;
+
+// 异步迭代器，重载签名
+async function *func_5(): number;
+
+// 隆重推出，新增的 Node Declaration
+@decorator                          // 装饰器
+async node GoodNode(data, $$) {     // 异步有参数非匿名节点
+    state: {                        // 节点状态声明
+        stateA: 0,
+        stateB: true,
+    };
+    $$: string, number;             // 节点总端口类型定义
+    $portA: boolean;                // 节点单端口类型定义
+
+    // 普通语句
+}

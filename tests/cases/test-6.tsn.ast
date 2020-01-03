@@ -1,0 +1,383 @@
+{
+   "kind": "SourceFile",
+   "text": "// Test all declaration\n\nvar i;\nvar j = 1;\nvar k, l = 2, m = 3;\n\nlet a = 1;\nconst b = true;\n\nfunction func_1() {\n    return;\n    return 1;\n}\n\n// 泛型函数\nfunction func_2<T extends object, U, V>() {}\n\n// 泛型函数，可选参数，默认参数，参数类型\nfunction func_3<T, U>(arg_1?: string, arg_2?: number = 0) {}\n\n// 重载\nfunction func_4(): void;\nfunction func_4(a: string): number;\n\n// 异步迭代器，重载签名\nasync function *func_5(): number;\n\n// 隆重推出，新增的 Node Declaration\n@decorator                          // 装饰器\nasync node GoodNode(data, $$) {     // 异步有参数非匿名节点\n    state: {                        // 节点状态声明\n        stateA: 0,\n        stateB: true,\n    };\n    $$: string, number;             // 节点总端口类型定义\n    $portA: boolean;                // 节点单端口类型定义\n\n    // 普通语句\n}\n",
+   "fileName": ".\\tests\\cases\\test-6.tsn",
+   "statements": [
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 95,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "i"
+               }
+            }
+         ]
+      },
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 95,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "j"
+               },
+               "initializer": {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 0
+               }
+            }
+         ]
+      },
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 95,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "k"
+               }
+            },
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "l"
+               },
+               "initializer": {
+                  "kind": "NumericLiteral",
+                  "text": "2",
+                  "numericLiteralFlags": 0
+               }
+            },
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "m"
+               },
+               "initializer": {
+                  "kind": "NumericLiteral",
+                  "text": "3",
+                  "numericLiteralFlags": 0
+               }
+            }
+         ]
+      },
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 101,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "a"
+               },
+               "initializer": {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 0
+               }
+            }
+         ]
+      },
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 66,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "b"
+               },
+               "initializer": {
+                  "kind": "TrueKeyword"
+               }
+            }
+         ]
+      },
+      {
+         "kind": "FunctionDeclaration",
+         "name": {
+            "kind": "Identifier",
+            "text": "func_1"
+         },
+         "parameters": [],
+         "body": {
+            "kind": "Block",
+            "statements": [
+               {
+                  "kind": "ReturnStatement"
+               },
+               {
+                  "kind": "ReturnStatement",
+                  "expression": {
+                     "kind": "NumericLiteral",
+                     "text": "1",
+                     "numericLiteralFlags": 0
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "kind": "FunctionDeclaration",
+         "name": {
+            "kind": "Identifier",
+            "text": "func_2"
+         },
+         "typeParameters": [
+            {
+               "kind": "TypeParameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "T"
+               },
+               "constraint": {
+                  "kind": "ObjectKeyword"
+               }
+            },
+            {
+               "kind": "TypeParameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "U"
+               }
+            },
+            {
+               "kind": "TypeParameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "V"
+               }
+            }
+         ],
+         "parameters": [],
+         "body": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "FunctionDeclaration",
+         "name": {
+            "kind": "Identifier",
+            "text": "func_3"
+         },
+         "typeParameters": [
+            {
+               "kind": "TypeParameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "T"
+               }
+            },
+            {
+               "kind": "TypeParameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "U"
+               }
+            }
+         ],
+         "parameters": [
+            {
+               "kind": "Parameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "arg_1"
+               },
+               "questionToken": {
+                  "kind": "QuestionToken"
+               },
+               "type": {
+                  "kind": "StringKeyword"
+               }
+            },
+            {
+               "kind": "Parameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "arg_2"
+               },
+               "questionToken": {
+                  "kind": "QuestionToken"
+               },
+               "type": {
+                  "kind": "NumberKeyword"
+               },
+               "initializer": {
+                  "kind": "NumericLiteral",
+                  "text": "0",
+                  "numericLiteralFlags": 0
+               }
+            }
+         ],
+         "body": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "FunctionDeclaration",
+         "name": {
+            "kind": "Identifier",
+            "text": "func_4"
+         },
+         "parameters": [],
+         "type": {
+            "kind": "VoidKeyword"
+         }
+      },
+      {
+         "kind": "FunctionDeclaration",
+         "name": {
+            "kind": "Identifier",
+            "text": "func_4"
+         },
+         "parameters": [
+            {
+               "kind": "Parameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "a"
+               },
+               "type": {
+                  "kind": "StringKeyword"
+               }
+            }
+         ],
+         "type": {
+            "kind": "NumberKeyword"
+         }
+      },
+      {
+         "kind": "FunctionDeclaration",
+         "modifiers": [
+            {
+               "kind": "AsyncKeyword"
+            }
+         ],
+         "asteriskToken": {
+            "kind": "AsteriskToken"
+         },
+         "name": {
+            "kind": "Identifier",
+            "text": "func_5"
+         },
+         "parameters": [],
+         "type": {
+            "kind": "NumberKeyword"
+         }
+      },
+      {
+         "kind": "NodeDeclaration",
+         "decorators": [
+            {
+               "kind": "Decorator",
+               "expression": {
+                  "kind": "Identifier",
+                  "text": "decorator"
+               }
+            }
+         ],
+         "modifiers": [
+            {
+               "kind": "AsyncKeyword"
+            }
+         ],
+         "isSubnet": false,
+         "name": {
+            "kind": "Identifier",
+            "text": "GoodNode"
+         },
+         "parameters": [
+            {
+               "kind": "Parameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "data"
+               }
+            },
+            {
+               "kind": "Parameter",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "$$"
+               }
+            }
+         ],
+         "nodeBlock": {
+            "kind": "NodeBlock",
+            "statements": [
+               {
+                  "kind": "NodeStateDeclaration",
+                  "expression": {
+                     "kind": "ObjectLiteralExpression",
+                     "properties": [
+                        {
+                           "kind": "PropertyAssignment",
+                           "name": {
+                              "kind": "Identifier",
+                              "text": "stateA"
+                           },
+                           "initializer": {
+                              "kind": "NumericLiteral",
+                              "text": "0",
+                              "numericLiteralFlags": 0
+                           }
+                        },
+                        {
+                           "kind": "PropertyAssignment",
+                           "name": {
+                              "kind": "Identifier",
+                              "text": "stateB"
+                           },
+                           "initializer": {
+                              "kind": "TrueKeyword"
+                           }
+                        }
+                     ]
+                  }
+               },
+               {
+                  "kind": "NodeAllPortTypeDeclaration",
+                  "types": [
+                     {
+                        "kind": "StringKeyword"
+                     },
+                     {
+                        "kind": "NumberKeyword"
+                     }
+                  ]
+               },
+               {
+                  "kind": "NodePortTypeDeclaration",
+                  "portName": {
+                     "kind": "Identifier",
+                     "text": "$portA"
+                  },
+                  "type": {
+                     "kind": "BooleanKeyword"
+                  }
+               }
+            ]
+         }
+      }
+   ],
+   "nodeCount": 95
+}

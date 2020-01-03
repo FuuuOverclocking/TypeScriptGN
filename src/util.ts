@@ -1,4 +1,4 @@
-import { CharacterCodes, SyntaxKind, KeywordSyntaxKind, textToKeyword } from './lang-types';
+import { CharacterCodes, KeywordSyntaxKind, SyntaxKind, textToKeyword } from './types';
 
 export function assert(expression: boolean, msg?: string) {
     if (expression) return;

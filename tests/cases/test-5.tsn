@@ -1,0 +1,95 @@
+// Test all Statement
+
+;                           // Empty
+
+{
+    a = 1 + 1;              // 表达式语句
+}                           // Block
+
+continue;
+break;
+fallthrough;                // 新增的语句，用以穿过 switch 的 case/default
+
+return;
+return 1 + 1;
+
+debugger;
+
+label_a: for {              // label 和 零元 for 语句
+    for {                   // 等同于 while (true)
+        break label_a;
+    }
+}
+
+if true {
+    // 普通的 if 语句
+}
+
+if feature := computeFeature(); feature > 0 {
+    // 含有变量声明的 if 语句
+} elif feature2 := computeFeature(); feature2 > 0 {
+    // elif 从句
+} elif true {
+
+} else {
+    // else 从句
+}
+
+for abc {
+    // 一元 for ，等同于 while (abc)
+}
+
+for i := 0; i < 10; ++i {
+    // 经典
+}
+
+for i = 0 /* 第一元可以是表达式而非声明 */; i < 10 ; /* 省略第三元 */ {
+
+}
+
+for ; i < 10; {
+    // 省略第一元，第三元
+}
+
+switch day := time.weekday(); day {
+    case 1: fallthrough;
+    case 2: fallthrough;
+    case 3: fallthrough; // 这个是不必要的 fallthrough ，但整齐
+        'Painful day';
+    // 这里会自动 break ，避免遗漏
+    
+    case 4: fallthrough;
+    case 5: fallthrough;
+        'Not so painful';
+    
+    default:
+        'Happy day';
+}
+
+// try-catch-finally
+
+try {
+    1 / 0;
+} catch e {
+    e;
+} finally { }
+
+try {
+    1 / 0;
+} catch {
+    e;
+}
+
+try {
+    1 / 0;
+} finally { }
+
+// 从 C# 那里模仿来的 using 语句
+
+const txt2 = fs.createFile("test2.txt");
+using txt := fs.createFile("test.txt");
+      txt2 {
+    txt.writeLn("Line one");
+    txt.writeLn("Line two");
+    txt2.writeLn("Line three");
+}

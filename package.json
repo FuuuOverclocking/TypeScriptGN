@@ -1,6 +1,6 @@
 {
     "name": "typescriptgn",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "description": "TypeScriptGN language compiler",
     "main": "./built/typescriptgn.js",
     "author": "X.Y.Z.",
@@ -10,7 +10,8 @@
         "build": "tsc -p ./tsconfig.json",
         "build:watch": "tsc -p ./tsconfig.json --watch",
         "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-        "lint": "tslint --fix -c tslint.json 'src/**/*.ts'"
+        "lint": "tslint --fix -c tslint.json 'src/**/*.ts'",
+        "pkg:win": "pkg ./built/tsgnc.js -t node10-win-x64 --out-path ./bin"
     },
     "devDependencies": {
         "@types/fs-extra": "^8.0.1",

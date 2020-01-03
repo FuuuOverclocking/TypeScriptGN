@@ -1,0 +1,16 @@
+// Test prefix and postfix expression
+
+delete obj.propA;           // 删除键
+typeof 12345;               // 求运行时类型
+await AsyncFunction();      // 异步语法：等待 Promise resolve 或者 reject
+yield;                      // 迭代器暂停恢复语句
+yield 1;
+yield * 2;
+<number> 123;               // 类型断言
+123 as number;              // 另一种类型断言，其实属于二元算符
+! true;                     // 布尔求反
+~-1;                        // 求异或
++3;
+
+++i;
+i--;

@@ -1,0 +1,178 @@
+{
+   "kind": "SourceFile",
+   "text": "// Test prefix and postfix expression\n\ndelete obj.propA;           // 删除键\ntypeof 12345;               // 求运行时类型\nawait AsyncFunction();      // 异步语法：等待 Promise resolve 或者 reject\nyield;                      // 迭代器暂停恢复语句\nyield 1;\nyield * 2;\n<number> 123;               // 类型断言\n123 as number;              // 另一种类型断言，其实属于二元算符\n! true;                     // 布尔求反\n~-1;                        // 求异或\n+3;\n\n++i;\ni--;",
+   "fileName": ".\\tests\\cases\\test-3.tsn",
+   "statements": [
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUnaryExpression",
+            "operator": 70,
+            "operand": {
+               "kind": "PropertyAccessExpression",
+               "expression": {
+                  "kind": "Identifier",
+                  "text": "obj"
+               },
+               "name": {
+                  "kind": "Identifier",
+                  "text": "propA"
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUnaryExpression",
+            "operator": 94,
+            "operand": {
+               "kind": "NumericLiteral",
+               "text": "12345",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUnaryExpression",
+            "operator": 115,
+            "operand": {
+               "kind": "CallExpression",
+               "expression": {
+                  "kind": "Identifier",
+                  "text": "AsyncFunction"
+               },
+               "arguments": {
+                  "kind": "Arguments",
+                  "list": []
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "YieldExpression",
+            "hasAsterisk": false
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "YieldExpression",
+            "hasAsterisk": false,
+            "expression": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "YieldExpression",
+            "hasAsterisk": true,
+            "expression": {
+               "kind": "NumericLiteral",
+               "text": "2",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "TypeAssertionExpression",
+            "type": {
+               "kind": "NumberKeyword"
+            },
+            "operand": {
+               "kind": "NumericLiteral",
+               "text": "123",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "AsExpression",
+            "left": {
+               "kind": "NumericLiteral",
+               "text": "123",
+               "numericLiteralFlags": 1
+            },
+            "operatorToken": {
+               "kind": "AsKeyword"
+            },
+            "right": {
+               "kind": "NumberKeyword"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUnaryExpression",
+            "operator": 43,
+            "operand": {
+               "kind": "TrueKeyword"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUnaryExpression",
+            "operator": 44,
+            "operand": {
+               "kind": "PrefixUnaryExpression",
+               "operator": 32,
+               "operand": {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 0
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUnaryExpression",
+            "operator": 31,
+            "operand": {
+               "kind": "NumericLiteral",
+               "text": "3",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PrefixUpdateExpression",
+            "operator": 20,
+            "operand": {
+               "kind": "Identifier",
+               "text": "i"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PostfixUpdateExpression",
+            "operand": {
+               "kind": "Identifier",
+               "text": "i"
+            },
+            "operator": 21
+         }
+      }
+   ],
+   "nodeCount": 47
+}
