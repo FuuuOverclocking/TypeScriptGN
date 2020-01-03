@@ -1,4 +1,4 @@
-import { CharacterCodes, SyntaxKind, SyntaxKindMarker, TokenFlags } from './lang-types';
+import { CharacterCodes, SyntaxKind, SyntaxKindMarker, TokenFlags } from './types';
 import { assert, checkReservedWord, isBinaryDigit, isDigit, isHexDigit, isIdentifierPart, isIdentifierStart, isLineBreak, isOctalDigit } from './util';
 
 interface ScannerLike {
@@ -24,6 +24,8 @@ interface ScannerLike {
     hasPrecedingLineBreak(): boolean;
     isIdentifier(): boolean;
     isReservedWord(): boolean;
+
+    reScanGreaterToken(): SyntaxKind;
 
     /** Scan next token and move forward. */
     scan(): SyntaxKind;
@@ -74,8 +76,9 @@ let tokenFlags: TokenFlags = TokenFlags.None;
  * If the callback returns false, the scanner is restored
  * to the state it was in before helper function was called.
  */
-function protectContextHelper(
-    callback: () => /* should not restore context */ boolean
+function protectContextHelper<T>(
+    callback: () => T,
+    alwaysRestore: boolean
 ) {
     const saveEnd = end;
     const savePos = pos;
@@ -85,15 +88,18 @@ function protectContextHelper(
     const saveTokenValue = tokenValue;
     const saveTokenFlags = tokenFlags;
 
-    if (callback()) return;
+    const result = callback();
 
-    end = saveEnd;
-    pos = savePos;
-    startPos = saveStartPos;
-    tokenPos = saveTokenPos;
-    token = saveToken;
-    tokenValue = saveTokenValue;
-    tokenFlags = saveTokenFlags;
+    if (!result || alwaysRestore) {
+        end = saveEnd;
+        pos = savePos;
+        startPos = saveStartPos;
+        tokenPos = saveTokenPos;
+        token = saveToken;
+        tokenValue = saveTokenValue;
+        tokenFlags = saveTokenFlags;
+    }
+    return result;
 }
 
 export class Scanner implements ScannerLike {
@@ -157,31 +163,18 @@ export class Scanner implements ScannerLike {
 
 
     tryScan<T>(callback: () => T): T {
-        let result: T;
-        protectContextHelper(() => {
-            result = callback();
-            return !!result;
-        });
-        return result!;
+        return protectContextHelper(callback, false);
     }
 
     lookAhead<T>(callback: () => T): T {
-        let result: T;
-        protectContextHelper(() => {
-            result = callback();
-            return false;
-        });
-        return result!;
+        return protectContextHelper(callback, true);
     }
 
     scanRange<T>(start: number, length: number, callback: () => T): T {
-        let result: T;
-        protectContextHelper(() => {
+        return protectContextHelper(() => {
             this.setTextRange(start, length);
-            result = callback();
-            return false;
-        });
-        return result!;
+            return callback();
+        }, true);
     }
 
 
@@ -338,7 +331,7 @@ export class Scanner implements ScannerLike {
 
                 case CharacterCodes.colon:
                     if (text.charCodeAt(pos + 1) === CharacterCodes.equals) {
-                        return pos += 2, token = SyntaxKind.ColonToken;
+                        return pos += 2, token = SyntaxKind.ColonEqualsToken;
                     }
                     pos++;
                     return token = SyntaxKind.ColonToken;
@@ -358,23 +351,6 @@ export class Scanner implements ScannerLike {
                     pos++;
                     return token = SyntaxKind.LessThanToken;
                 case CharacterCodes.greaterThan:
-                    if (text.charCodeAt(pos + 1) === CharacterCodes.greaterThan) {
-                        if (text.charCodeAt(pos + 2) === CharacterCodes.greaterThan) {
-                            if (text.charCodeAt(pos + 3) === CharacterCodes.equals) {
-                                return pos += 4,
-                                    token = SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken;
-                            }
-                            return pos += 3,
-                                token = SyntaxKind.GreaterThanGreaterThanGreaterThanToken;
-                        }
-                        if (text.charCodeAt(pos + 2) === CharacterCodes.equals) {
-                            return pos += 3, token = SyntaxKind.GreaterThanGreaterThanEqualsToken;
-                        }
-                        return pos += 2, token = SyntaxKind.GreaterThanGreaterThanToken;
-                    }
-                    if (text.charCodeAt(pos + 1) === CharacterCodes.equals) {
-                        return pos += 2, token = SyntaxKind.GreaterThanEqualsToken;
-                    }
                     pos++;
                     return token = SyntaxKind.GreaterThanToken;
                 case CharacterCodes.equals:
@@ -504,6 +480,8 @@ export class Scanner implements ScannerLike {
 
                 default:
                     // Identifier or keyword
+                    // Recognized as keyword by default. Use isIdentifier() to check if token
+                    // could be a identifier when a keyword is not expected.
                     if (isIdentifierStart(ch)) {
                         pos += 1;
                         while (pos < end && isIdentifierPart(ch = text.codePointAt(pos)!)) {
@@ -658,5 +636,28 @@ export class Scanner implements ScannerLike {
             pos++;
         }
         return text.substring(start, pos);
+    }
+
+    public reScanGreaterToken(): SyntaxKind {
+        if (token === SyntaxKind.GreaterThanToken) {
+            if (text.charCodeAt(pos) === CharacterCodes.greaterThan) {
+                if (text.charCodeAt(pos + 1) === CharacterCodes.greaterThan) {
+                    if (text.charCodeAt(pos + 2) === CharacterCodes.equals) {
+                        return pos += 3, token = SyntaxKind.GreaterThanGreaterThanGreaterThanEqualsToken;
+                    }
+                    return pos += 2, token = SyntaxKind.GreaterThanGreaterThanGreaterThanToken;
+                }
+                if (text.charCodeAt(pos + 1) === CharacterCodes.equals) {
+                    return pos += 2, token = SyntaxKind.GreaterThanGreaterThanEqualsToken;
+                }
+                pos++;
+                return token = SyntaxKind.GreaterThanGreaterThanToken;
+            }
+            if (text.charCodeAt(pos) === CharacterCodes.equals) {
+                pos++;
+                return token = SyntaxKind.GreaterThanEqualsToken;
+            }
+        }
+        return token;
     }
 }

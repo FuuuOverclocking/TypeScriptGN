@@ -1,9 +1,3 @@
-export {
-    SyntaxKind,
-    SyntaxKindMarker,
-    KeywordSyntaxKind,
-    TokenFlags,
-    CharacterCodes,
-} from './types';
+export * from './types';
 
 export { Scanner } from './lexical';

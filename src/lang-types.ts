@@ -46,7 +46,7 @@ export enum SyntaxKind {
     SlashToken,                 // /
     PercentToken,               // %
     LessThanLessThanToken,      // <<
-    GreaterThanGreaterThanToken,// >>
+    GreaterThanGreaterThanToken, // >>
     GreaterThanGreaterThanGreaterThanToken, // >>>
     AmpersandToken,             // &
     BarToken,                   // |
@@ -92,7 +92,7 @@ export enum SyntaxKind {
     DefaultKeyword,
     DeleteKeyword,
     DoKeyword,
-    ElifKeyword,
+    ElifKeyword,                    // self-defined
     ElseKeyword,
     EnumKeyword,
     ExportKeyword,
@@ -130,11 +130,9 @@ export enum SyntaxKind {
     PublicKeyword,
     StaticKeyword,
     YieldKeyword,
-    // self-defined keyword
-    FallThroughKeyword,
-    NodeKeyword,
-    SubnetKeyword,
-    UsingKeyword,
+
+    FallThroughKeyword,             // self-defined
+    UsingKeyword,                   // self-defined
     //     </ReservedWord>
 
     //     <ContextualKeyword>
@@ -169,14 +167,172 @@ export enum SyntaxKind {
     GlobalKeyword,
     BigIntKeyword,
     OfKeyword,
-    StateKeyword, // self-defined
+    NodeKeyword,                    // self-defined
+    SubnetKeyword,                  // self-defined
+    StateKeyword,                   // self-defined
     //     </ContextualKeyword>
     // </Keyword>
     // </Token>
 
+    // <ParseTreeNodes>
+
+    // Names
+    QualifiedName,
+    ComputedPropertyName,
+    // Signature elements
+    TypeParameter,
+    Parameter,
+    Decorator,
+    // TypeMember
+    PropertySignature,
+    PropertyDeclaration,
+    MethodSignature,
+    MethodDeclaration,
+    Constructor,
+    GetAccessor,
+    SetAccessor,
+    CallSignature,
+    ConstructSignature,
+    IndexSignature,
+    // Type
+    TypePredicate,
+    TypeReference,
+    FunctionType,
+    ConstructorType,
+    TypeQuery,
+    TypeLiteral,
+    ArrayType,
+    TupleType,
+    OptionalType,
+    RestType,
+    UnionType,
+    IntersectionType,
+    ConditionalType,
+    InferType,
+    ParenthesizedType,
+    ThisType,
+    TypeOperator,
+    IndexedAccessType,
+    MappedType,
+    LiteralType,
+    ImportType,
+    // Binding patterns
+    ObjectBindingPattern,
+    ArrayBindingPattern,
+    BindingElement,
+    // Expression
+    ArrayLiteralExpression,
+    ObjectLiteralExpression,
+    PropertyAccessExpression,
+    ElementAccessExpression,
+    CallExpression,
+    NewExpression,
+    NewTargetExpression,
+    TaggedTemplateExpression,
+    TypeAssertionExpression,
+    ParenthesizedExpression,
+    FunctionExpression,
+    ArrowFunction,
+    PrefixUpdateExpression,
+    PostfixUpdateExpression,
+    PrefixUnaryExpression,
+    BinaryExpression,
+    ConditionalExpression,
+    ConnectionExpression,
+    CommaExpression,
+    TemplateExpression,
+    YieldExpression,
+    SpreadExpression,
+    ClassExpression,
+    NodeExpression,
+    OmittedExpression,
+    ExpressionWithTypeArguments,
+    AsExpression,
+    NonNullExpression,
+    AssignmentExpression,
+    MetaProperty,
+    SyntheticExpression,
+
+    // Misc
+    TemplateSpan,
+    SemicolonClassElement,
+    // Element
+    Block,
+    EmptyStatement,
+    VariableStatement,
+    ExpressionStatement,
+    IfStatement,
+    DoStatement,
+    WhileStatement,
+    ForStatement,
+    ForInStatement,
+    ForOfStatement,
+    ContinueStatement,
+    BreakStatement,
+    ReturnStatement,
+    WithStatement,
+    SwitchStatement,
+    LabeledStatement,
+    ThrowStatement,
+    FallThroughStatement,
+    TryStatement,
+    UsingStatement,
+    DebuggerStatement,
+    VariableDeclaration,
+    VariableBinding,
+    FunctionDeclaration,
+    ClassDeclaration,
+    InterfaceDeclaration,
+    TypeAliasDeclaration,
+    EnumDeclaration,
+    NodeDeclaration,
+    NodeStateDeclaration,
+    NodeAllPortTypeDeclaration,
+    NodePortTypeDeclaration,
+    ModuleDeclaration,
+    ModuleBlock,
+    CaseBlock,
+    NodeBlock,
+    NamespaceExportDeclaration,
+    ImportEqualsDeclaration,
+    ImportDeclaration,
+    ImportClause,
+    NamespaceImport,
+    NamedImportsOrExports,
+    ImportOrExportSpecifier,
+    ExportAssignment,
+    ExportDeclaration,
+    NamedExports,
+    ExportSpecifier,
+    MissingDeclaration,
+    Arguments,
+    // Module references
+    ExternalModuleReference,
+
+    // Clauses
+    CaseClause,
+    DefaultClause,
+    ElifClause,
+    HeritageClause,
+    CatchClause,
+
+    // Property assignments
+    PropertyAssignment,
+    ShorthandPropertyAssignment,
+
+    // Enum
+    EnumMember,
+
+    // Top-level nodes
+    SourceFile,
+
+    // Synthesized list
+    SyntaxList,
+
+
     // Enum value count
     Count,
-};
+}
 
 export enum SyntaxKindMarker {
     FirstAssignment = SyntaxKind.EqualsToken,
@@ -202,8 +358,7 @@ export enum SyntaxKindMarker {
 
 export const textToKeyword: {
     [_: string]: KeywordSyntaxKind | undefined;
-} = Object.create(null);
-Object.assign(textToKeyword, {
+} = Object.assign(Object.create(null), {
     abstract: SyntaxKind.AbstractKeyword,
     any: SyntaxKind.AnyKeyword,
     as: SyntaxKind.AsKeyword,
@@ -216,7 +371,7 @@ Object.assign(textToKeyword, {
     class: SyntaxKind.ClassKeyword,
     continue: SyntaxKind.ContinueKeyword,
     const: SyntaxKind.ConstKeyword,
-    ["" + "constructor"]: SyntaxKind.ConstructorKeyword,
+    constructor: SyntaxKind.ConstructorKeyword,
     debugger: SyntaxKind.DebuggerKeyword,
     declare: SyntaxKind.DeclareKeyword,
     default: SyntaxKind.DefaultKeyword,
@@ -287,7 +442,6 @@ Object.assign(textToKeyword, {
     await: SyntaxKind.AwaitKeyword,
     of: SyntaxKind.OfKeyword,
 });
-
 
 export type KeywordSyntaxKind =
     | SyntaxKind.AbstractKeyword
@@ -384,7 +538,7 @@ export enum TokenFlags {
     BinarySpecifier = 1 << 4,   // e.g. `0b0110010000000000`
     OctalSpecifier = 1 << 5,    // e.g. `0o777`
     BinaryOrOctalSpecifier = BinarySpecifier | OctalSpecifier,
-    NumericLiteralFlags = Scientific | Octal | HexSpecifier | BinaryOrOctalSpecifier
+    NumericLiteralFlags = Scientific | Octal | HexSpecifier | BinaryOrOctalSpecifier,
 }
 
 export enum CharacterCodes {
