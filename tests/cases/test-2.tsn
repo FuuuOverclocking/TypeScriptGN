@@ -1,0 +1,13 @@
+// Test all Left Handside Expression
+
+obj.propA;              // 属性访问
+obj?.propA;             // 属性 Optional Chain 访问
+obj[0];                 // 下标访问
+obj?.[0 + 1];           // 下标 Optional Chain 访问，下标值计算得到
+
+new.target;             // 一种特殊的 Member Expression
+
+func(1,2,);                 // 函数调用
+func<number>();         // 泛型函数调用
+obj.func<string>();     // 泛型函数调用
+obj.func?.<number>();   // Optional Chain 泛型函数调用

@@ -1,0 +1,188 @@
+{
+   "kind": "SourceFile",
+   "text": "// Test all Left Handside Expression\n\nobj.propA;              // 属性访问\nobj?.propA;             // 属性 Optional Chain 访问\nobj[0];                 // 下标访问\nobj?.[0 + 1];           // 下标 Optional Chain 访问，下标值计算得到\n\nnew.target;             // 一种特殊的 Member Expression\n\nfunc(1,2,);                 // 函数调用\nfunc<number>();         // 泛型函数调用\nobj.func<string>();     // 泛型函数调用\nobj.func?.<number>();   // Optional Chain 泛型函数调用\n",
+   "fileName": ".\\tests\\cases\\test-2.tsn",
+   "statements": [
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PropertyAccessExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "obj"
+            },
+            "name": {
+               "kind": "Identifier",
+               "text": "propA"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "PropertyAccessExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "obj"
+            },
+            "questionDotToken": {
+               "kind": "QuestionDotToken"
+            },
+            "name": {
+               "kind": "Identifier",
+               "text": "propA"
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ElementAccessExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "obj"
+            },
+            "argumentExpression": {
+               "kind": "NumericLiteral",
+               "text": "0",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ElementAccessExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "obj"
+            },
+            "questionDotToken": {
+               "kind": "QuestionDotToken"
+            },
+            "argumentExpression": {
+               "kind": "BinaryExpression",
+               "left": {
+                  "kind": "NumericLiteral",
+                  "text": "0",
+                  "numericLiteralFlags": 0
+               },
+               "operatorToken": {
+                  "kind": "PlusToken"
+               },
+               "right": {
+                  "kind": "NumericLiteral",
+                  "text": "1",
+                  "numericLiteralFlags": 0
+               }
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "NewTargetExpression"
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "CallExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "func"
+            },
+            "arguments": {
+               "kind": "Arguments",
+               "list": [
+                  {
+                     "kind": "NumericLiteral",
+                     "text": "1",
+                     "numericLiteralFlags": 0
+                  },
+                  {
+                     "kind": "NumericLiteral",
+                     "text": "2",
+                     "numericLiteralFlags": 0
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "CallExpression",
+            "expression": {
+               "kind": "Identifier",
+               "text": "func"
+            },
+            "typeArguments": [
+               {
+                  "kind": "NumberKeyword"
+               }
+            ],
+            "arguments": {
+               "kind": "Arguments",
+               "list": []
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "CallExpression",
+            "expression": {
+               "kind": "PropertyAccessExpression",
+               "expression": {
+                  "kind": "Identifier",
+                  "text": "obj"
+               },
+               "name": {
+                  "kind": "Identifier",
+                  "text": "func"
+               }
+            },
+            "typeArguments": [
+               {
+                  "kind": "StringKeyword"
+               }
+            ],
+            "arguments": {
+               "kind": "Arguments",
+               "list": []
+            }
+         }
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "CallExpression",
+            "expression": {
+               "kind": "PropertyAccessExpression",
+               "expression": {
+                  "kind": "Identifier",
+                  "text": "obj"
+               },
+               "name": {
+                  "kind": "Identifier",
+                  "text": "func"
+               }
+            },
+            "questionDotToken": {
+               "kind": "QuestionDotToken"
+            },
+            "typeArguments": [
+               {
+                  "kind": "NumberKeyword"
+               }
+            ],
+            "arguments": {
+               "kind": "Arguments",
+               "list": []
+            }
+         }
+      }
+   ],
+   "nodeCount": 50
+}

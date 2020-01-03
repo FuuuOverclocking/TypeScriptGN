@@ -1,0 +1,767 @@
+{
+   "kind": "SourceFile",
+   "text": "// Test all Statement\n\n;                           // Empty\n\n{\n    a = 1 + 1;              // 表达式语句\n}                           // Block\n\ncontinue;\nbreak;\nfallthrough;                // 新增的语句，用以穿过 switch 的 case/default\n\nreturn;\nreturn 1 + 1;\n\ndebugger;\n\nlabel_a: for {              // label 和 零元 for 语句\n    for {                   // 等同于 while (true)\n        break label_a;\n    }\n}\n\nif true {\n    // 普通的 if 语句\n}\n\nif feature := computeFeature(); feature > 0 {\n    // 含有变量声明的 if 语句\n} elif feature2 := computeFeature(); feature2 > 0 {\n    // elif 从句\n} elif true {\n\n} else {\n    // else 从句\n}\n\nfor abc {\n    // 一元 for ，等同于 while (abc)\n}\n\nfor i := 0; i < 10; ++i {\n    // 经典\n}\n\nfor i = 0 /* 第一元可以是表达式而非声明 */; i < 10 ; /* 省略第三元 */ {\n\n}\n\nfor ; i < 10; {\n    // 省略第一元，第三元\n}\n\nswitch day := time.weekday(); day {\n    case 1: fallthrough;\n    case 2: fallthrough;\n    case 3: fallthrough; // 这个是不必要的 fallthrough ，但整齐\n        'Painful day';\n    // 这里会自动 break ，避免遗漏\n    \n    case 4: fallthrough;\n    case 5: fallthrough;\n        'Not so painful';\n    \n    default:\n        'Happy day';\n}\n\n// try-catch-finally\n\ntry {\n    1 / 0;\n} catch e {\n    e;\n} finally { }\n\ntry {\n    1 / 0;\n} catch {\n    e;\n}\n\ntry {\n    1 / 0;\n} finally { }\n\n// 从 C# 那里模仿来的 using 语句\n\nconst txt2 = fs.createFile(\"test2.txt\");\nusing txt := fs.createFile(\"test.txt\");\n      txt2 {\n    txt.writeLn(\"Line one\");\n    txt.writeLn(\"Line two\");\n    txt2.writeLn(\"Line three\");\n}\n",
+   "fileName": ".\\tests\\cases\\test-5.tsn",
+   "statements": [
+      {
+         "kind": "EmptyStatement"
+      },
+      {
+         "kind": "Block",
+         "statements": [
+            {
+               "kind": "ExpressionStatement",
+               "expression": {
+                  "kind": "AssignmentExpression",
+                  "left": {
+                     "kind": "Identifier",
+                     "text": "a"
+                  },
+                  "operatorToken": {
+                     "kind": "EqualsToken"
+                  },
+                  "right": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "NumericLiteral",
+                        "text": "1",
+                        "numericLiteralFlags": 0
+                     },
+                     "operatorToken": {
+                        "kind": "PlusToken"
+                     },
+                     "right": {
+                        "kind": "NumericLiteral",
+                        "text": "1",
+                        "numericLiteralFlags": 0
+                     }
+                  }
+               }
+            }
+         ]
+      },
+      {
+         "kind": "ContinueStatement"
+      },
+      {
+         "kind": "BreakStatement"
+      },
+      {
+         "kind": "FallThroughStatement"
+      },
+      {
+         "kind": "ReturnStatement"
+      },
+      {
+         "kind": "ReturnStatement",
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            },
+            "operatorToken": {
+               "kind": "PlusToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "1",
+               "numericLiteralFlags": 0
+            }
+         }
+      },
+      {
+         "kind": "DebuggerStatement"
+      },
+      {
+         "kind": "LabeledStatement",
+         "label": {
+            "kind": "Identifier",
+            "text": "label_a"
+         },
+         "statement": {
+            "kind": "ForStatement",
+            "block": {
+               "kind": "Block",
+               "statements": [
+                  {
+                     "kind": "ForStatement",
+                     "block": {
+                        "kind": "Block",
+                        "statements": [
+                           {
+                              "kind": "BreakStatement",
+                              "label": {
+                                 "kind": "Identifier",
+                                 "text": "label_a"
+                              }
+                           }
+                        ]
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "kind": "IfStatement",
+         "expression": {
+            "kind": "TrueKeyword"
+         },
+         "thenBlock": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "IfStatement",
+         "variableDeclaration": {
+            "kind": "VariableDeclaration",
+            "isWalrus": true,
+            "declarations": [
+               {
+                  "kind": "VariableBinding",
+                  "name": {
+                     "kind": "Identifier",
+                     "text": "feature"
+                  },
+                  "initializer": {
+                     "kind": "CallExpression",
+                     "expression": {
+                        "kind": "Identifier",
+                        "text": "computeFeature"
+                     },
+                     "arguments": {
+                        "kind": "Arguments",
+                        "list": []
+                     }
+                  }
+               }
+            ]
+         },
+         "expression": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "feature"
+            },
+            "operatorToken": {
+               "kind": "GreaterThanToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "0",
+               "numericLiteralFlags": 0
+            }
+         },
+         "thenBlock": {
+            "kind": "Block",
+            "statements": []
+         },
+         "elifClauses": [
+            {
+               "kind": "ElifClause",
+               "variableDeclaration": {
+                  "kind": "VariableDeclaration",
+                  "isWalrus": true,
+                  "declarations": [
+                     {
+                        "kind": "VariableBinding",
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "feature2"
+                        },
+                        "initializer": {
+                           "kind": "CallExpression",
+                           "expression": {
+                              "kind": "Identifier",
+                              "text": "computeFeature"
+                           },
+                           "arguments": {
+                              "kind": "Arguments",
+                              "list": []
+                           }
+                        }
+                     }
+                  ]
+               },
+               "expression": {
+                  "kind": "BinaryExpression",
+                  "left": {
+                     "kind": "Identifier",
+                     "text": "feature2"
+                  },
+                  "operatorToken": {
+                     "kind": "GreaterThanToken"
+                  },
+                  "right": {
+                     "kind": "NumericLiteral",
+                     "text": "0",
+                     "numericLiteralFlags": 0
+                  }
+               },
+               "thenBlock": {
+                  "kind": "Block",
+                  "statements": []
+               }
+            },
+            {
+               "kind": "ElifClause",
+               "expression": {
+                  "kind": "TrueKeyword"
+               },
+               "thenBlock": {
+                  "kind": "Block",
+                  "statements": []
+               }
+            }
+         ],
+         "elseBlock": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "ForStatement",
+         "condition": {
+            "kind": "Identifier",
+            "text": "abc"
+         },
+         "block": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "ForStatement",
+         "initializer": {
+            "kind": "VariableDeclaration",
+            "isWalrus": true,
+            "declarations": [
+               {
+                  "kind": "VariableBinding",
+                  "name": {
+                     "kind": "Identifier",
+                     "text": "i"
+                  },
+                  "initializer": {
+                     "kind": "NumericLiteral",
+                     "text": "0",
+                     "numericLiteralFlags": 0
+                  }
+               }
+            ]
+         },
+         "condition": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "i"
+            },
+            "operatorToken": {
+               "kind": "LessThanToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "10",
+               "numericLiteralFlags": 0
+            }
+         },
+         "incrementor": {
+            "kind": "PrefixUpdateExpression",
+            "operator": 20,
+            "operand": {
+               "kind": "Identifier",
+               "text": "i"
+            }
+         },
+         "block": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "ForStatement",
+         "initializer": {
+            "kind": "AssignmentExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "i"
+            },
+            "operatorToken": {
+               "kind": "EqualsToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "0",
+               "numericLiteralFlags": 0
+            }
+         },
+         "condition": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "i"
+            },
+            "operatorToken": {
+               "kind": "LessThanToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "10",
+               "numericLiteralFlags": 0
+            }
+         },
+         "block": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "ForStatement",
+         "condition": {
+            "kind": "BinaryExpression",
+            "left": {
+               "kind": "Identifier",
+               "text": "i"
+            },
+            "operatorToken": {
+               "kind": "LessThanToken"
+            },
+            "right": {
+               "kind": "NumericLiteral",
+               "text": "10",
+               "numericLiteralFlags": 0
+            }
+         },
+         "block": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "SwitchStatement",
+         "variableDeclaration": {
+            "kind": "VariableDeclaration",
+            "isWalrus": true,
+            "declarations": [
+               {
+                  "kind": "VariableBinding",
+                  "name": {
+                     "kind": "Identifier",
+                     "text": "day"
+                  },
+                  "initializer": {
+                     "kind": "CallExpression",
+                     "expression": {
+                        "kind": "PropertyAccessExpression",
+                        "expression": {
+                           "kind": "Identifier",
+                           "text": "time"
+                        },
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "weekday"
+                        }
+                     },
+                     "arguments": {
+                        "kind": "Arguments",
+                        "list": []
+                     }
+                  }
+               }
+            ]
+         },
+         "expression": {
+            "kind": "Identifier",
+            "text": "day"
+         },
+         "caseBlock": {
+            "kind": "CaseBlock",
+            "clauses": [
+               {
+                  "kind": "CaseClause",
+                  "expression": {
+                     "kind": "NumericLiteral",
+                     "text": "1",
+                     "numericLiteralFlags": 0
+                  },
+                  "statements": [
+                     {
+                        "kind": "FallThroughStatement"
+                     }
+                  ]
+               },
+               {
+                  "kind": "CaseClause",
+                  "expression": {
+                     "kind": "NumericLiteral",
+                     "text": "2",
+                     "numericLiteralFlags": 0
+                  },
+                  "statements": [
+                     {
+                        "kind": "FallThroughStatement"
+                     }
+                  ]
+               },
+               {
+                  "kind": "CaseClause",
+                  "expression": {
+                     "kind": "NumericLiteral",
+                     "text": "3",
+                     "numericLiteralFlags": 0
+                  },
+                  "statements": [
+                     {
+                        "kind": "FallThroughStatement"
+                     },
+                     {
+                        "kind": "ExpressionStatement",
+                        "expression": {
+                           "kind": "StringLiteral",
+                           "text": "'Painful day'"
+                        }
+                     }
+                  ]
+               },
+               {
+                  "kind": "CaseClause",
+                  "expression": {
+                     "kind": "NumericLiteral",
+                     "text": "4",
+                     "numericLiteralFlags": 0
+                  },
+                  "statements": [
+                     {
+                        "kind": "FallThroughStatement"
+                     }
+                  ]
+               },
+               {
+                  "kind": "CaseClause",
+                  "expression": {
+                     "kind": "NumericLiteral",
+                     "text": "5",
+                     "numericLiteralFlags": 0
+                  },
+                  "statements": [
+                     {
+                        "kind": "FallThroughStatement"
+                     },
+                     {
+                        "kind": "ExpressionStatement",
+                        "expression": {
+                           "kind": "StringLiteral",
+                           "text": "'Not so painful'"
+                        }
+                     }
+                  ]
+               },
+               {
+                  "kind": "DefaultClause",
+                  "statements": [
+                     {
+                        "kind": "ExpressionStatement",
+                        "expression": {
+                           "kind": "StringLiteral",
+                           "text": "'Happy day'"
+                        }
+                     }
+                  ]
+               }
+            ]
+         }
+      },
+      {
+         "kind": "TryStatement",
+         "tryBlock": {
+            "kind": "Block",
+            "statements": [
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "NumericLiteral",
+                        "text": "1",
+                        "numericLiteralFlags": 1
+                     },
+                     "operatorToken": {
+                        "kind": "SlashToken"
+                     },
+                     "right": {
+                        "kind": "NumericLiteral",
+                        "text": "0",
+                        "numericLiteralFlags": 0
+                     }
+                  }
+               }
+            ]
+         },
+         "catchClause": {
+            "kind": "CatchClause",
+            "identifier": {
+               "kind": "Identifier",
+               "text": "e"
+            },
+            "block": {
+               "kind": "Block",
+               "statements": [
+                  {
+                     "kind": "ExpressionStatement",
+                     "expression": {
+                        "kind": "Identifier",
+                        "text": "e"
+                     }
+                  }
+               ]
+            }
+         },
+         "finallyBlock": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "TryStatement",
+         "tryBlock": {
+            "kind": "Block",
+            "statements": [
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "NumericLiteral",
+                        "text": "1",
+                        "numericLiteralFlags": 1
+                     },
+                     "operatorToken": {
+                        "kind": "SlashToken"
+                     },
+                     "right": {
+                        "kind": "NumericLiteral",
+                        "text": "0",
+                        "numericLiteralFlags": 0
+                     }
+                  }
+               }
+            ]
+         },
+         "catchClause": {
+            "kind": "CatchClause",
+            "block": {
+               "kind": "Block",
+               "statements": [
+                  {
+                     "kind": "ExpressionStatement",
+                     "expression": {
+                        "kind": "Identifier",
+                        "text": "e"
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      {
+         "kind": "TryStatement",
+         "tryBlock": {
+            "kind": "Block",
+            "statements": [
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "BinaryExpression",
+                     "left": {
+                        "kind": "NumericLiteral",
+                        "text": "1",
+                        "numericLiteralFlags": 1
+                     },
+                     "operatorToken": {
+                        "kind": "SlashToken"
+                     },
+                     "right": {
+                        "kind": "NumericLiteral",
+                        "text": "0",
+                        "numericLiteralFlags": 0
+                     }
+                  }
+               }
+            ]
+         },
+         "finallyBlock": {
+            "kind": "Block",
+            "statements": []
+         }
+      },
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 66,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "txt2"
+               },
+               "initializer": {
+                  "kind": "CallExpression",
+                  "expression": {
+                     "kind": "PropertyAccessExpression",
+                     "expression": {
+                        "kind": "Identifier",
+                        "text": "fs"
+                     },
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "createFile"
+                     }
+                  },
+                  "arguments": {
+                     "kind": "Arguments",
+                     "list": [
+                        {
+                           "kind": "StringLiteral",
+                           "text": "\"test2.txt\""
+                        }
+                     ]
+                  }
+               }
+            }
+         ]
+      },
+      {
+         "kind": "UsingStatement",
+         "usingTargets": [
+            {
+               "kind": "VariableDeclaration",
+               "isWalrus": true,
+               "declarations": [
+                  {
+                     "kind": "VariableBinding",
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "txt"
+                     },
+                     "initializer": {
+                        "kind": "CallExpression",
+                        "expression": {
+                           "kind": "PropertyAccessExpression",
+                           "expression": {
+                              "kind": "Identifier",
+                              "text": "fs"
+                           },
+                           "name": {
+                              "kind": "Identifier",
+                              "text": "createFile"
+                           }
+                        },
+                        "arguments": {
+                           "kind": "Arguments",
+                           "list": [
+                              {
+                                 "kind": "StringLiteral",
+                                 "text": "\"test.txt\""
+                              }
+                           ]
+                        }
+                     }
+                  }
+               ]
+            },
+            {
+               "kind": "Identifier",
+               "text": "txt2"
+            }
+         ],
+         "block": {
+            "kind": "Block",
+            "statements": [
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "CallExpression",
+                     "expression": {
+                        "kind": "PropertyAccessExpression",
+                        "expression": {
+                           "kind": "Identifier",
+                           "text": "txt"
+                        },
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "writeLn"
+                        }
+                     },
+                     "arguments": {
+                        "kind": "Arguments",
+                        "list": [
+                           {
+                              "kind": "StringLiteral",
+                              "text": "\"Line one\""
+                           }
+                        ]
+                     }
+                  }
+               },
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "CallExpression",
+                     "expression": {
+                        "kind": "PropertyAccessExpression",
+                        "expression": {
+                           "kind": "Identifier",
+                           "text": "txt"
+                        },
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "writeLn"
+                        }
+                     },
+                     "arguments": {
+                        "kind": "Arguments",
+                        "list": [
+                           {
+                              "kind": "StringLiteral",
+                              "text": "\"Line two\""
+                           }
+                        ]
+                     }
+                  }
+               },
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "CallExpression",
+                     "expression": {
+                        "kind": "PropertyAccessExpression",
+                        "expression": {
+                           "kind": "Identifier",
+                           "text": "txt2"
+                        },
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "writeLn"
+                        }
+                     },
+                     "arguments": {
+                        "kind": "Arguments",
+                        "list": [
+                           {
+                              "kind": "StringLiteral",
+                              "text": "\"Line three\""
+                           }
+                        ]
+                     }
+                  }
+               }
+            ]
+         }
+      }
+   ],
+   "nodeCount": 198
+}
