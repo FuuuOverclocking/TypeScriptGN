@@ -1223,14 +1223,16 @@ export namespace Parser {
                 callExpr.questionDotToken = questionDotToken;
                 callExpr.arguments = parseArguments();
                 expr = finishNode(callExpr);
+                continue;
             }
 
             if (questionDotToken) {
                 error('Identifier expected.');
             }
 
-            return expr;
+            break;
         }
+        return expr;
     }
 
     function parseTypeArgumentsInExpression(): lang.NodeList<lang.Type> | undefined {
