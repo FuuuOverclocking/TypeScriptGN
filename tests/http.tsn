@@ -1,0 +1,43 @@
+const http = createHTTPServer().willListen(3000);
+
+http.$request -> next -> http.$respond;
+subnet HttpWorker {
+    state: {
+        requestCounter: 0
+    };
+
+    const mapper = StateMap(HttpWorker.state, 'requestCounter');
+
+    $I -> next;
+    @Scheduler.queue.max(100)
+    node router(req) {
+        $$: any;
+        state: mapper();
+
+        state.requestCounter++;
+
+        if req.path.substr(0, 4) === '/api' {
+            $$.$api(req);
+        } else {
+            $$.$static(req);
+        }
+    }
+
+    router.$static -> attr(timeout(2000)).decorate(
+        staticServer('./')
+    ) -> $O;
+
+    router.$api -> controllerSubnet -> $O;
+
+    $IE -> next -> $O;
+    node(e) {
+        $$: any, any;
+
+        console.error(e);
+        if e.invocation.data instanceof Request {
+            $$(new Respond(e.invocation.data, {
+                status: 500
+            }));
+        }
+    }
+}

@@ -1,0 +1,673 @@
+{
+   "kind": "SourceFile",
+   "text": "const http = createHTTPServer().willListen(3000);\n\nhttp.$request -> next -> http.$respond;\nsubnet HttpWorker {\n    state: {\n        requestCounter: 0\n    };\n\n    const mapper = StateMap(HttpWorker.state, 'requestCounter');\n\n    $I -> next;\n    @Scheduler.queue.max(100)\n    node router(req) {\n        $$: any;\n        state: mapper();\n\n        state.requestCounter++;\n\n        if req.path.substr(0, 4) === '/api' {\n            $$.$api(req);\n        } else {\n            $$.$static(req);\n        }\n    }\n\n    router.$static -> attr(timeout(2000)).decorate(\n        staticServer('./')\n    ) -> $O;\n\n    router.$api -> controllerSubnet -> $O;\n\n    $IE -> next -> $O;\n    node(e) {\n        $$: any, any;\n\n        console.error(e);\n        if e.invocation.data instanceof Request {\n            $$(new Respond(e.invocation.data, {\n                status: 500\n            }));\n        }\n    }\n}\n",
+   "fileName": "http.tsn",
+   "statements": [
+      {
+         "kind": "VariableDeclaration",
+         "vlc": 66,
+         "isWalrus": false,
+         "declarations": [
+            {
+               "kind": "VariableBinding",
+               "name": {
+                  "kind": "Identifier",
+                  "text": "http"
+               },
+               "initializer": {
+                  "kind": "CallExpression",
+                  "expression": {
+                     "kind": "PropertyAccessExpression",
+                     "expression": {
+                        "kind": "CallExpression",
+                        "expression": {
+                           "kind": "Identifier",
+                           "text": "createHTTPServer"
+                        },
+                        "arguments": {
+                           "kind": "Arguments",
+                           "list": []
+                        }
+                     },
+                     "name": {
+                        "kind": "Identifier",
+                        "text": "willListen"
+                     }
+                  },
+                  "arguments": {
+                     "kind": "Arguments",
+                     "list": [
+                        {
+                           "kind": "NumericLiteral",
+                           "text": "3000",
+                           "numericLiteralFlags": 0
+                        }
+                     ]
+                  }
+               }
+            }
+         ]
+      },
+      {
+         "kind": "ExpressionStatement",
+         "expression": {
+            "kind": "ConnectionExpression",
+            "left": {
+               "kind": "ConnectionExpression",
+               "left": {
+                  "kind": "PropertyAccessExpression",
+                  "expression": {
+                     "kind": "Identifier",
+                     "text": "http"
+                  },
+                  "name": {
+                     "kind": "Identifier",
+                     "text": "$request"
+                  }
+               },
+               "right": {
+                  "kind": "Identifier",
+                  "text": "next"
+               }
+            },
+            "right": {
+               "kind": "PropertyAccessExpression",
+               "expression": {
+                  "kind": "Identifier",
+                  "text": "http"
+               },
+               "name": {
+                  "kind": "Identifier",
+                  "text": "$respond"
+               }
+            }
+         }
+      },
+      {
+         "kind": "NodeDeclaration",
+         "isSubnet": true,
+         "name": {
+            "kind": "Identifier",
+            "text": "HttpWorker"
+         },
+         "nodeBlock": {
+            "kind": "NodeBlock",
+            "statements": [
+               {
+                  "kind": "NodeStateDeclaration",
+                  "expression": {
+                     "kind": "ObjectLiteralExpression",
+                     "properties": [
+                        {
+                           "kind": "PropertyAssignment",
+                           "name": {
+                              "kind": "Identifier",
+                              "text": "requestCounter"
+                           },
+                           "initializer": {
+                              "kind": "NumericLiteral",
+                              "text": "0",
+                              "numericLiteralFlags": 0
+                           }
+                        }
+                     ]
+                  }
+               },
+               {
+                  "kind": "VariableDeclaration",
+                  "vlc": 66,
+                  "isWalrus": false,
+                  "declarations": [
+                     {
+                        "kind": "VariableBinding",
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "mapper"
+                        },
+                        "initializer": {
+                           "kind": "CallExpression",
+                           "expression": {
+                              "kind": "Identifier",
+                              "text": "StateMap"
+                           },
+                           "arguments": {
+                              "kind": "Arguments",
+                              "list": [
+                                 {
+                                    "kind": "PropertyAccessExpression",
+                                    "expression": {
+                                       "kind": "Identifier",
+                                       "text": "HttpWorker"
+                                    },
+                                    "name": {
+                                       "kind": "Identifier",
+                                       "text": "state",
+                                       "originalKeywordKind": 143
+                                    }
+                                 },
+                                 {
+                                    "kind": "StringLiteral",
+                                    "text": "'requestCounter'"
+                                 }
+                              ]
+                           }
+                        }
+                     }
+                  ]
+               },
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "ConnectionExpression",
+                     "left": {
+                        "kind": "Identifier",
+                        "text": "$I"
+                     },
+                     "right": {
+                        "kind": "Identifier",
+                        "text": "next"
+                     }
+                  }
+               },
+               {
+                  "kind": "NodeDeclaration",
+                  "decorators": [
+                     {
+                        "kind": "Decorator",
+                        "expression": {
+                           "kind": "CallExpression",
+                           "expression": {
+                              "kind": "PropertyAccessExpression",
+                              "expression": {
+                                 "kind": "PropertyAccessExpression",
+                                 "expression": {
+                                    "kind": "Identifier",
+                                    "text": "Scheduler"
+                                 },
+                                 "name": {
+                                    "kind": "Identifier",
+                                    "text": "queue"
+                                 }
+                              },
+                              "name": {
+                                 "kind": "Identifier",
+                                 "text": "max"
+                              }
+                           },
+                           "arguments": {
+                              "kind": "Arguments",
+                              "list": [
+                                 {
+                                    "kind": "NumericLiteral",
+                                    "text": "100",
+                                    "numericLiteralFlags": 0
+                                 }
+                              ]
+                           }
+                        }
+                     }
+                  ],
+                  "isSubnet": false,
+                  "name": {
+                     "kind": "Identifier",
+                     "text": "router"
+                  },
+                  "parameters": [
+                     {
+                        "kind": "Parameter",
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "req"
+                        }
+                     }
+                  ],
+                  "nodeBlock": {
+                     "kind": "NodeBlock",
+                     "statements": [
+                        {
+                           "kind": "NodeAllPortTypeDeclaration",
+                           "types": [
+                              {
+                                 "kind": "AnyKeyword"
+                              }
+                           ]
+                        },
+                        {
+                           "kind": "NodeStateDeclaration",
+                           "expression": {
+                              "kind": "CallExpression",
+                              "expression": {
+                                 "kind": "Identifier",
+                                 "text": "mapper"
+                              },
+                              "arguments": {
+                                 "kind": "Arguments",
+                                 "list": []
+                              }
+                           }
+                        },
+                        {
+                           "kind": "ExpressionStatement",
+                           "expression": {
+                              "kind": "PostfixUpdateExpression",
+                              "operand": {
+                                 "kind": "PropertyAccessExpression",
+                                 "expression": {
+                                    "kind": "Identifier",
+                                    "text": "state",
+                                    "originalKeywordKind": 143
+                                 },
+                                 "name": {
+                                    "kind": "Identifier",
+                                    "text": "requestCounter"
+                                 }
+                              },
+                              "operator": 20
+                           }
+                        },
+                        {
+                           "kind": "IfStatement",
+                           "expression": {
+                              "kind": "BinaryExpression",
+                              "left": {
+                                 "kind": "CallExpression",
+                                 "expression": {
+                                    "kind": "PropertyAccessExpression",
+                                    "expression": {
+                                       "kind": "PropertyAccessExpression",
+                                       "expression": {
+                                          "kind": "Identifier",
+                                          "text": "req"
+                                       },
+                                       "name": {
+                                          "kind": "Identifier",
+                                          "text": "path"
+                                       }
+                                    },
+                                    "name": {
+                                       "kind": "Identifier",
+                                       "text": "substr"
+                                    }
+                                 },
+                                 "arguments": {
+                                    "kind": "Arguments",
+                                    "list": [
+                                       {
+                                          "kind": "NumericLiteral",
+                                          "text": "0",
+                                          "numericLiteralFlags": 0
+                                       },
+                                       {
+                                          "kind": "NumericLiteral",
+                                          "text": "4",
+                                          "numericLiteralFlags": 0
+                                       }
+                                    ]
+                                 }
+                              },
+                              "operatorToken": {
+                                 "kind": "EqualsEqualsEqualsToken"
+                              },
+                              "right": {
+                                 "kind": "StringLiteral",
+                                 "text": "'/api'"
+                              }
+                           },
+                           "thenBlock": {
+                              "kind": "Block",
+                              "statements": [
+                                 {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                       "kind": "CallExpression",
+                                       "expression": {
+                                          "kind": "PropertyAccessExpression",
+                                          "expression": {
+                                             "kind": "Identifier",
+                                             "text": "$$"
+                                          },
+                                          "name": {
+                                             "kind": "Identifier",
+                                             "text": "$api"
+                                          }
+                                       },
+                                       "arguments": {
+                                          "kind": "Arguments",
+                                          "list": [
+                                             {
+                                                "kind": "Identifier",
+                                                "text": "req"
+                                             }
+                                          ]
+                                       }
+                                    }
+                                 }
+                              ]
+                           },
+                           "elseBlock": {
+                              "kind": "Block",
+                              "statements": [
+                                 {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                       "kind": "CallExpression",
+                                       "expression": {
+                                          "kind": "PropertyAccessExpression",
+                                          "expression": {
+                                             "kind": "Identifier",
+                                             "text": "$$"
+                                          },
+                                          "name": {
+                                             "kind": "Identifier",
+                                             "text": "$static"
+                                          }
+                                       },
+                                       "arguments": {
+                                          "kind": "Arguments",
+                                          "list": [
+                                             {
+                                                "kind": "Identifier",
+                                                "text": "req"
+                                             }
+                                          ]
+                                       }
+                                    }
+                                 }
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               },
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "ConnectionExpression",
+                     "left": {
+                        "kind": "ConnectionExpression",
+                        "left": {
+                           "kind": "PropertyAccessExpression",
+                           "expression": {
+                              "kind": "Identifier",
+                              "text": "router"
+                           },
+                           "name": {
+                              "kind": "Identifier",
+                              "text": "$static"
+                           }
+                        },
+                        "right": {
+                           "kind": "CallExpression",
+                           "expression": {
+                              "kind": "PropertyAccessExpression",
+                              "expression": {
+                                 "kind": "CallExpression",
+                                 "expression": {
+                                    "kind": "Identifier",
+                                    "text": "attr"
+                                 },
+                                 "arguments": {
+                                    "kind": "Arguments",
+                                    "list": [
+                                       {
+                                          "kind": "CallExpression",
+                                          "expression": {
+                                             "kind": "Identifier",
+                                             "text": "timeout"
+                                          },
+                                          "arguments": {
+                                             "kind": "Arguments",
+                                             "list": [
+                                                {
+                                                   "kind": "NumericLiteral",
+                                                   "text": "2000",
+                                                   "numericLiteralFlags": 0
+                                                }
+                                             ]
+                                          }
+                                       }
+                                    ]
+                                 }
+                              },
+                              "name": {
+                                 "kind": "Identifier",
+                                 "text": "decorate"
+                              }
+                           },
+                           "arguments": {
+                              "kind": "Arguments",
+                              "list": [
+                                 {
+                                    "kind": "CallExpression",
+                                    "expression": {
+                                       "kind": "Identifier",
+                                       "text": "staticServer"
+                                    },
+                                    "arguments": {
+                                       "kind": "Arguments",
+                                       "list": [
+                                          {
+                                             "kind": "StringLiteral",
+                                             "text": "'./'"
+                                          }
+                                       ]
+                                    }
+                                 }
+                              ]
+                           }
+                        }
+                     },
+                     "right": {
+                        "kind": "Identifier",
+                        "text": "$O"
+                     }
+                  }
+               },
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "ConnectionExpression",
+                     "left": {
+                        "kind": "ConnectionExpression",
+                        "left": {
+                           "kind": "PropertyAccessExpression",
+                           "expression": {
+                              "kind": "Identifier",
+                              "text": "router"
+                           },
+                           "name": {
+                              "kind": "Identifier",
+                              "text": "$api"
+                           }
+                        },
+                        "right": {
+                           "kind": "Identifier",
+                           "text": "controllerSubnet"
+                        }
+                     },
+                     "right": {
+                        "kind": "Identifier",
+                        "text": "$O"
+                     }
+                  }
+               },
+               {
+                  "kind": "ExpressionStatement",
+                  "expression": {
+                     "kind": "ConnectionExpression",
+                     "left": {
+                        "kind": "ConnectionExpression",
+                        "left": {
+                           "kind": "Identifier",
+                           "text": "$IE"
+                        },
+                        "right": {
+                           "kind": "Identifier",
+                           "text": "next"
+                        }
+                     },
+                     "right": {
+                        "kind": "Identifier",
+                        "text": "$O"
+                     }
+                  }
+               },
+               {
+                  "kind": "NodeDeclaration",
+                  "isSubnet": false,
+                  "parameters": [
+                     {
+                        "kind": "Parameter",
+                        "name": {
+                           "kind": "Identifier",
+                           "text": "e"
+                        }
+                     }
+                  ],
+                  "nodeBlock": {
+                     "kind": "NodeBlock",
+                     "statements": [
+                        {
+                           "kind": "NodeAllPortTypeDeclaration",
+                           "types": [
+                              {
+                                 "kind": "AnyKeyword"
+                              },
+                              {
+                                 "kind": "AnyKeyword"
+                              }
+                           ]
+                        },
+                        {
+                           "kind": "ExpressionStatement",
+                           "expression": {
+                              "kind": "CallExpression",
+                              "expression": {
+                                 "kind": "PropertyAccessExpression",
+                                 "expression": {
+                                    "kind": "Identifier",
+                                    "text": "console"
+                                 },
+                                 "name": {
+                                    "kind": "Identifier",
+                                    "text": "error"
+                                 }
+                              },
+                              "arguments": {
+                                 "kind": "Arguments",
+                                 "list": [
+                                    {
+                                       "kind": "Identifier",
+                                       "text": "e"
+                                    }
+                                 ]
+                              }
+                           }
+                        },
+                        {
+                           "kind": "IfStatement",
+                           "expression": {
+                              "kind": "BinaryExpression",
+                              "left": {
+                                 "kind": "PropertyAccessExpression",
+                                 "expression": {
+                                    "kind": "PropertyAccessExpression",
+                                    "expression": {
+                                       "kind": "Identifier",
+                                       "text": "e"
+                                    },
+                                    "name": {
+                                       "kind": "Identifier",
+                                       "text": "invocation"
+                                    }
+                                 },
+                                 "name": {
+                                    "kind": "Identifier",
+                                    "text": "data"
+                                 }
+                              },
+                              "operatorToken": {
+                                 "kind": "InstanceOfKeyword"
+                              },
+                              "right": {
+                                 "kind": "Identifier",
+                                 "text": "Request"
+                              }
+                           },
+                           "thenBlock": {
+                              "kind": "Block",
+                              "statements": [
+                                 {
+                                    "kind": "ExpressionStatement",
+                                    "expression": {
+                                       "kind": "CallExpression",
+                                       "expression": {
+                                          "kind": "Identifier",
+                                          "text": "$$"
+                                       },
+                                       "arguments": {
+                                          "kind": "Arguments",
+                                          "list": [
+                                             {
+                                                "kind": "NewExpression",
+                                                "expression": {
+                                                   "kind": "Identifier",
+                                                   "text": "Respond"
+                                                },
+                                                "arguments": {
+                                                   "kind": "Arguments",
+                                                   "list": [
+                                                      {
+                                                         "kind": "PropertyAccessExpression",
+                                                         "expression": {
+                                                            "kind": "PropertyAccessExpression",
+                                                            "expression": {
+                                                               "kind": "Identifier",
+                                                               "text": "e"
+                                                            },
+                                                            "name": {
+                                                               "kind": "Identifier",
+                                                               "text": "invocation"
+                                                            }
+                                                         },
+                                                         "name": {
+                                                            "kind": "Identifier",
+                                                            "text": "data"
+                                                         }
+                                                      },
+                                                      {
+                                                         "kind": "ObjectLiteralExpression",
+                                                         "properties": [
+                                                            {
+                                                               "kind": "PropertyAssignment",
+                                                               "name": {
+                                                                  "kind": "Identifier",
+                                                                  "text": "status"
+                                                               },
+                                                               "initializer": {
+                                                                  "kind": "NumericLiteral",
+                                                                  "text": "500",
+                                                                  "numericLiteralFlags": 0
+                                                               }
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                }
+                                             }
+                                          ]
+                                       }
+                                    }
+                                 }
+                              ]
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ],
+   "nodeCount": 183
+}
